@@ -5,8 +5,7 @@ import './Home.css';
 
 function Home() {
     return (
-        <div className="App">
-            
+        <div className="App"> 
             <header className="App-header">
                 <div className="App-paracosm">
                 {/* Logo */}
@@ -14,11 +13,26 @@ function Home() {
                         <img className="paracosm-logo" src={logo} />
                         <i className="fas fa-external-link-alt external-link" data-fa-transform="up-6"></i>
                     </a>
-                    </div>
-
                 <p>
                     This is our app.
                 </p>
+                </div>
+                <div className= "App-UserEntry">
+                    <form>   
+                        <label>
+                            Username:
+                        <input type="text" name = "username"/>
+                        </label>
+                    </form>
+                </div>
+                <div className= "App-PassEntry">
+                    <form>   
+                        <label>
+                            Password:
+                        <input type="text" name = "username"/>
+                        </label>
+                    </form>
+                </div>
             </header>
         </div> 
     );
