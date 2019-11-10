@@ -33,6 +33,14 @@ function Home() {
                         </label>
                     </form>
                 </div>
+                <div className= "App-UUIDEntry">
+                    <form>   
+                        <label>
+                            UUID:
+                        <input type="text" name = "username"/>
+                        </label>
+                    </form>
+                </div>
             </header>
         </div> 
     );
