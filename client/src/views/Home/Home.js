@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import {Link} from 'react-router-dom'
 import logo from '../../assets/paracosm.png';
 import './Home.css';
+//const [title, setTitle] = useState('');
 //import { Link } from 'react-router-dom';
 
 class Home extends Component {

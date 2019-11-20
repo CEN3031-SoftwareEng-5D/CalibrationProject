@@ -15,12 +15,15 @@ const uploadFile = (file) => {
     const fileContent = fs.readFileSync(file.path);
 
     // Setting up S3 upload parameters
+    //var name = "x/"+file.name;
+    //console.log(name);
     const params = {
         Bucket: BUCKET_NAME,
+        //Key:name,
         Key: file.name, // File name you want to save as in S3
         Body: fileContent
     };
-
+    console.log(file.path);
     // Uploading files to the bucket
     s3.upload(params, function(err, data) {
         if (err) {
@@ -29,6 +32,7 @@ const uploadFile = (file) => {
         console.log(`File uploaded successfully. ${data.Location}`);
     });
 };
+
 
 const populateFiles = ()=>{
   const params={
