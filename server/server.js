@@ -19,13 +19,19 @@ server.use(bodyParser.urlencoded({
 server.use(express.json()); 
 server.use(express.urlencoded()); 
 
-server.post('/upload', upload);
+server.post('/upload', function (req, res) {
+    upload();
+});
 
 server.post('/uuid', function (req, res) {
     const uuid = req.body.uuid;
     exports.uuid = uuid;
 });
 
-server.listen(5000, () => {
+server.get('/getFiles', function (req, res) {
+    getDownloadFiles();
+});
+
+server.listen(process.env.PORT || 5000, () => {
     console.log('Server started!');
 });

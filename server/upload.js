@@ -8,8 +8,8 @@ var isDeleted = false;
 
 
 const s3 = new AWS.S3({
-    accessKeyId: require('./config/config.js').ID,
-    secretAccessKey: require('./config/config').SECRET
+    accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY
 });
 
 const uploadFile = (file, uuid) => {
@@ -86,40 +86,45 @@ const deleteFile = (file) => {
     });
 };
 
-module.exports = function upload(req, res) {
+module.exports = {
+    upload: function(req, res) {
 
-  var files = [];
-  var form = new IncomingForm()
-  if(!isDeleted){
-    //deleteAllFiles();
-    isDeleted = true;
-  }
-  form.on('file', (field, file) => {
-    var uuid = serverModule.uuid.UUID;
-    console.log(uuid);
-    uploadFile(file, uuid);
+    var files = [];
+    var form = new IncomingForm()
+    if (!isDeleted) {
+        //deleteAllFiles();
+        isDeleted = true;
+    }
+    form.on('file', (field, file) => {
+        var uuid = serverModule.uuid.UUID;
+        console.log(uuid);
+        uploadFile(file, uuid);
 
-  })
-  const params={
-    Bucket: BUCKET_NAME,
-    Delimiter: '',
-    Prefix: serverModule.uuid.UUID
-  }
-  s3.listObjectsV2(params, (err,data)=>{
-    if(err) throw err;
-   data.Contents.forEach(function(file){
-     //we can change this to only print certain files
-     files.push(file);
-     //console.log(file);
+    })
+    const params = {
+        Bucket: BUCKET_NAME,
+        Delimiter: '',
+        Prefix: serverModule.uuid.UUID
+    }
 
-   })
-   console.log(files);
-   })
-  //populateFiles(files);
+    form.on('end', () => {
+        res.json()
+    })
+    form.parse(req)
+    }, 
 
+    getDownloadFiles: function (req, res) {
+        s3.listObjectsV2(params, (err, data) => {
+            if (err) throw err;
+            data.Contents.forEach(function (file) {
+                //we can change this to only print certain files
+                files.push(file);
+                //console.log(file);
 
-  form.on('end', () => {
-    res.json()
-  })
-  form.parse(req)
-}
+            });
+            console.log(files);
+            res.render('index', { data: JSON.stringify(files) });
+        });
+
+    }
+};
