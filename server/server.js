@@ -6,6 +6,17 @@ var bodyParser = require('body-parser');
 const server = express();
 
 
+if (process.env.NODE_ENV === 'production') {
+    // Exprees will serve up production assets
+    server.use(express.static('client/build'));
+
+    // Express serve up index.html file if it doesn't recognize route
+    const path = require('path');
+    server.get('*', (req, res) => {
+        res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
+    });
+}
+
 var corsOptions = {
   origin: '*',
   optionsSuccessStatus: 200,
