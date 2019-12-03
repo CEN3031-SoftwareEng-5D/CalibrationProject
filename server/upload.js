@@ -96,7 +96,7 @@ module.exports = function upload(req, res) {
   }
   form.on('file', (field, file) => {
     var uuid = serverModule.uuid.UUID;
-    console.log(uuid);
+    //console.log(uuid);
     uploadFile(file, uuid);
 
   })
@@ -113,7 +113,7 @@ module.exports = function upload(req, res) {
      //console.log(file);
 
    })
-   console.log(files);
+   //console.log(files);
    })
   //populateFiles(files);
 
