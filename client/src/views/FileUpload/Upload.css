@@ -7,24 +7,25 @@
     overflow: hidden;
     background-color: rgb(19, 175, 180);
     min-height: 100vh;
+
 }
 
 .Content {
-  display: flex;
-  flex-direction: row;
-  padding-top: 16px;
-  box-sizing: border-box;
-  width: 100%;
-
+    display: flex;
+    flex-direction: row;
+    padding-top: 16px;
+    box-sizing: border-box;
+    width: 100%;
+    margin-left: -260px;
 }
 
 .viewFile {
-    margin-top:-250px;
+    margin-top:-500px;
     margin-left: 1000px;
 }
 
 .Files {
-  margin-left: 32px;
+  margin-left: 0px;
   align-items: flex-start;
   flex: 1;
   overflow-y: auto;
@@ -33,11 +34,11 @@
 .Actions {
   position: absolute;
   top: 32rem;
-  left: 23vw;
+  left: 6.5vw;
 }
 
 .Title {
-  margin-left: 45vw;
+  margin-left: 25vw;
   margin-top: 15vh;
   font-size: 30px;
   color: #fff;

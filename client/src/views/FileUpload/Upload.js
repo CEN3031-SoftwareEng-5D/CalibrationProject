@@ -200,7 +200,7 @@ class Upload extends Component {
                     {Display.map((item, index) => (
                         <p> Key : {item.Key}  </p>
                     ))}
-                </div>re
+                </div>
             </div>
         );
     }
