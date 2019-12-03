@@ -34,6 +34,7 @@ class Home extends Component {
             .catch(err => {
                 console.error(err);
             });
+ 
     }
 
     render() {

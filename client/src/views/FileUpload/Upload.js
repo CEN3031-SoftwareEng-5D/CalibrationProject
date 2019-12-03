@@ -8,6 +8,8 @@ import "./Upload.css";
 import axios from 'axios';
 
 
+var view = false;
+
 class Upload extends Component {
     constructor(props) {
         super(props);
@@ -47,7 +49,8 @@ class Upload extends Component {
             });
         //console.log(this.state.viewFiles);
         this.setState({ viewFiles: myFiles });
-        console.log(this.state.viewFiles);
+        //console.log(this.state.viewFiles[0].Key);
+        view = true;
     }
 
     // Pushes all files to the database.
@@ -140,7 +143,7 @@ class Upload extends Component {
             return (
                 <button
                     disabled={this.state.files.length < 0 || this.state.uploading}
-                    onClick={this.listFiles}
+                    onClick={this.uploadFiles}
                 >
                     Upload
         </button>
@@ -149,7 +152,12 @@ class Upload extends Component {
     }
 
     render() {
+        
+        let Display = this.state.viewFiles;
+        //console.log(Display);
+        
         return (
+
             <div className="Upload">
                 <div className="Actions">{this.renderActions()}</div>
                 <a class="buttonLink">
@@ -188,6 +196,11 @@ class Upload extends Component {
                         })}
                     </div>
                 </div>
+                <div className="viewFile">
+                    {Display.map((item, index) => (
+                        <p> Key : {item.Key}  </p>
+                    ))}
+                </div>re
             </div>
         );
     }

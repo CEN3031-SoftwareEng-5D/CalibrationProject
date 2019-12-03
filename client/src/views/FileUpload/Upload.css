@@ -18,6 +18,11 @@
 
 }
 
+.viewFile {
+    margin-top:-250px;
+    margin-left: 1000px;
+}
+
 .Files {
   margin-left: 32px;
   align-items: flex-start;
