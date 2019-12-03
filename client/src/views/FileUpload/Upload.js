@@ -39,7 +39,7 @@ class Upload extends Component {
         console.log("Jermtest");
         var myFiles;
         let res = await axios
-            .get('http://localhost:5000/getFiles')
+            .get('/getFiles')
             .then(function (response) {
                 
                 myFiles = response.data;
