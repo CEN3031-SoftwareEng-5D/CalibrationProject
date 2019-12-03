@@ -70,11 +70,9 @@ const deleteAllFiles = ()=>{
 }
 
 const deleteFile = (file) => {
-
     const params = {
       Bucket: BUCKET_NAME,
-      Key: file.Key,
-
+      Key: file.name,
     };
 
     // deleting files to the bucket
@@ -82,13 +80,38 @@ const deleteFile = (file) => {
       if (err)
         console.log(err, err.stack);  // error
       else
-        console.log("File Deleted "+file.Key);  // deleted
+        console.log("File Deleted "+file.name);  // deleted
     });
 };
 
+
+// var getObject = function(file) {
+//   var name = serverModule.uuid.UUID +"/"+file.name;
+//   return new Promise(function(success, reject) {
+//       s3.getObject(
+//             { Bucket: BUCKET_NAME, Key: name },
+//           function (error, data) {
+//               if(error) {
+//                   reject(error);
+//               } else {
+//                   success(data);
+//                   console.log(data);
+//               }
+//           }
+//       );
+//   });
+// }
+let download = file => {
+  var name = serverModule.uuid.UUID +"/"+file.name;
+  s3.getObject({ Bucket: BUCKET_NAME, Key: name }, (err, data) => {
+      var fileInfo = data.Body;
+      console.log(fileInfo);
+    })
+}
+
 module.exports = function upload(req, res) {
 
-  var files = [];
+  var fileContent = [];
   var form = new IncomingForm()
   if(!isDeleted){
     //deleteAllFiles();
@@ -98,25 +121,16 @@ module.exports = function upload(req, res) {
     var uuid = serverModule.uuid.UUID;
     console.log(uuid);
     uploadFile(file, uuid);
+    //deleteFile(file);
+    //download(file);
 
+    const url = s3.getSignedUrl('getObject', {
+        Bucket: BUCKET_NAME,
+        Key: uuid + '/' + file.name,
+        Expires: 300,
+    })
+    console.log(url);
   })
-  const params={
-    Bucket: BUCKET_NAME,
-    Delimiter: '',
-    Prefix: serverModule.uuid.UUID
-  }
-  s3.listObjectsV2(params, (err,data)=>{
-    if(err) throw err;
-   data.Contents.forEach(function(file){
-     //we can change this to only print certain files
-     files.push(file);
-     //console.log(file);
-
-   })
-   console.log(files);
-   })
-  //populateFiles(files);
-
 
   form.on('end', () => {
     res.json()
