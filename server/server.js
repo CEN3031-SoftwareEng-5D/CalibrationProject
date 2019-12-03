@@ -28,7 +28,7 @@ server.post('/uuid', function (req, res) {
 });
 
 server.get('/getFiles', function (req, res) {
-
+    console.log("here");
     listFilesModule.data.listFiles();
     setTimeout(function () {
         const files = listFilesModule.files;
