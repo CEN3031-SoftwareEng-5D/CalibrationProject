@@ -5,7 +5,9 @@ import {Link} from 'react-router-dom'
 import logo from '../../assets/paracosm.png';
 import checkCircleOutline from '../../assets/checkCircleOutline.svg'
 import authenticated from '../../authenticated'
+import axios from 'axios'
 import "./Upload.css";
+
 
 
 class Upload extends Component {
@@ -15,14 +17,34 @@ class Upload extends Component {
       files: [],
       uploading: false,
       uploadProgress: {},
-      successfullUploaded: false
+      successfullUploaded: false,
+      viewFiles: []
     };
 
     this.onFilesAdded = this.onFilesAdded.bind(this);
     this.uploadFiles = this.uploadFiles.bind(this);
     this.sendRequest = this.sendRequest.bind(this);
     this.renderActions = this.renderActions.bind(this);
+    this.getFiles = this.getFiles.bind(this);
   }
+
+  async getFiles() {
+    console.log("Heyooo");
+    var myFiles;
+    let res = await axios
+        .get('http://localhost:5000/getFiles')
+        .then(function (response) {
+
+            myFiles = response.data;
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+    //console.log(this.state.viewFiles);
+    this.setState({ viewFiles: myFiles });
+    //console.log(this.state.viewFiles[0].Key);
+  }
+
 
   // Add files from the dropzone
   onFilesAdded(files) {
@@ -130,6 +152,7 @@ class Upload extends Component {
   }
 
   render() {
+    let Display = this.state.viewFiles;
     return (
       <div className="Upload">
         <div className="Actions">{this.renderActions()}</div>
@@ -139,6 +162,9 @@ class Upload extends Component {
               Logout
             </button>
           </Link>
+          <button onClick={this.getFiles}>
+            View Files
+          </button>
         </a>
         <span className="Title">Upload Files</span>
         <div className="Content">
@@ -162,6 +188,14 @@ class Upload extends Component {
               );
           })}
           </div>
+        </div>
+        <div className="viewFile">
+            {Display.map((item, index) => (
+                <text> {item.Key.split("/")[0]}  </text>
+            ))}
+            {Display.map((item, index) => (
+                <p> {item.Key.split("/")[1]}  </p>
+            ))}
         </div>
       </div>
     );
