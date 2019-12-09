@@ -4,6 +4,7 @@ import Progress from "./progress/Progress";
 import {Link} from 'react-router-dom'
 import logo from '../../assets/paracosm.png';
 import checkCircleOutline from '../../assets/checkCircleOutline.svg'
+import authenticated from '../../authenticated'
 import "./Upload.css";
 
 
@@ -134,7 +135,7 @@ class Upload extends Component {
         <div className="Actions">{this.renderActions()}</div>
         <a class="buttonLink">
           <Link to="/Home">
-            <button class="logoutButton" type="button">
+            <button onClick  = {authenticated.logout()} class="logoutButton" type="button">
               Logout
             </button>
           </Link>
