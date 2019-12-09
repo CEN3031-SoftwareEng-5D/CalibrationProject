@@ -18,7 +18,8 @@ class Upload extends Component {
       uploading: false,
       uploadProgress: {},
       successfullUploaded: false,
-      viewFiles: []
+      viewFiles: [],
+      gotFiles: false
     };
 
     this.onFilesAdded = this.onFilesAdded.bind(this);
@@ -43,6 +44,7 @@ class Upload extends Component {
     //console.log(this.state.viewFiles);
     this.setState({ viewFiles: myFiles });
     //console.log(this.state.viewFiles[0].Key);
+    this.setState({ gotFiles: true});
   }
 
 
@@ -152,7 +154,13 @@ class Upload extends Component {
   }
 
   render() {
+    {/* First populate an array of files to view*/}
     let Display = this.state.viewFiles;
+    {/* Grab the first element of the arrau of files, and UUID = first element of the split key*/}
+    let uuid = (this.state.gotFiles ?
+                'Files in UUID: ' + Display.map((item, index) => (item.Key.split("/")[0]))[0] :
+                ' ');
+
     return (
       <div className="Upload">
         <div className="Actions">{this.renderActions()}</div>
@@ -162,10 +170,11 @@ class Upload extends Component {
               Logout
             </button>
           </Link>
-          <button onClick={this.getFiles}>
+
+          <button class= "viewFilesButton" onClick={this.getFiles}>
             View Files
           </button>
-        </a>
+          </a>
         <span className="Title">Upload Files</span>
         <div className="Content">
           <div>
@@ -189,13 +198,13 @@ class Upload extends Component {
           })}
           </div>
         </div>
-        <div className="viewFile">
-            {Display.map((item, index) => (
-                <text> {item.Key.split("/")[0]}  </text>
-            ))}
-            {Display.map((item, index) => (
-                <p> {item.Key.split("/")[1]}  </p>
-            ))}
+        <span className="UUID">
+         {uuid}
+        </span>
+        <div className="viewFiles">
+          {Display.map((item, index) => (
+              <p> {item.Key.split("/")[1]}  </p>
+          ))}
         </div>
       </div>
     );
