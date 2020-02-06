@@ -1,7 +1,7 @@
 # Welcome to the Calibration File Updating App!
 - ### Our web app: https://calibrationapp.herokuapp.com
 _______________________________________________________________________________________________________________________________________
-## Features Implemented: 
+## Features Implemented:
 
 ### •	Full, protected and hashed user registration and login through MongoDB:
 <img src = "https://i.imgur.com/inKLkQn.png" height = "50%" width = "50%" >
