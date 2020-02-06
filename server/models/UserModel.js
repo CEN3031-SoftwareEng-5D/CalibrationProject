@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 const crypto =  require('crypto')
 
-// Here our user schema is defined.
+// Here our user schema is defined
 
 const userSchema = new mongoose.Schema({
     profile:
